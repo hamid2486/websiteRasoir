@@ -1,0 +1,602 @@
+/* =============================================================
+   LANDING PAGE — RASOIR ÉLECTRIQUE DE HAUTE PRÉCISION
+   Fichier 2/3 : style.css (apparence de la page)
+   -------------------------------------------------------------
+   Sommaire :
+   1.  Variables globales (couleurs, tailles)
+   2.  Réinitialisation & styles de base
+   3.  Utilitaires (container, boutons, badges)
+   4.  Navbar (en-tête)
+   5.  Hero (section principale)
+   6.  Features (caractéristiques)
+   7.  Trust (avis & badges de confiance)
+   8.  Order (formulaire de commande)
+   9.  Footer (pied de page)
+   10. Modale & notification toast
+   11. Effets d'apparition au défilement (reveal)
+   12. Design adaptatif (media queries mobile / tablette)
+============================================================= */
+
+
+/* -------------------------------------------------------------
+   1. VARIABLES GLOBALES
+   On centralise les couleurs et tailles ici pour tout modifier
+   facilement (une seule ligne à changer !).
+------------------------------------------------------------- */
+:root {
+  /* Palette de couleurs */
+  --clr-bg:        #f6f8fc;   /* Fond général clair */
+  --clr-surface:   #ffffff;   /* Cartes / surfaces blanches */
+  --clr-dark:      #0e1730;   /* Bleu nuit (texte principal) */
+  --clr-primary:   #2563eb;   /* Bleu électrique (boutons) */
+  --clr-primary-d: #1d4ed8;  /* Bleu plus foncé (hover) */
+  --clr-accent:    #f59e0b;   /* Ambre (prix, étoiles) */
+  --clr-text:      #475569;   /* Texte secondaire */
+  --clr-light:     #e2e8f0;   /* Bordures claires */
+  --clr-success:   #16a34a;   /* Vert (confirmations) */
+
+  /* Typographie */
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Espacements & rayons */
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow: 0 10px 30px rgba(14, 23, 48, .08);
+  --shadow-lg: 0 20px 50px rgba(14, 23, 48, .16);
+  --nav-h: 72px;             /* Hauteur de la barre de navigation */
+}
+
+
+/* -------------------------------------------------------------
+   2. RÉINITIALISATION & BASE
+------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }  /* Défilement doux vers les ancres */
+
+body {
+  font-family: var(--font);
+  color: var(--clr-text);
+  background: var(--clr-bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+a   { text-decoration: none; color: inherit; }
+ul  { list-style: none; }
+
+/* Conteneur central : limite la largeur et ajoute des marges */
+.container {
+  width: min(1160px, 92%);   /* 92% sur petit écran, 1160px max */
+  margin-inline: auto;
+}
+
+
+/* -------------------------------------------------------------
+   3. UTILITAIRES (boutons, badges, titres de section)
+------------------------------------------------------------- */
+
+/* --- Boutons --- */
+.btn {
+  display: inline-block;
+  padding: 12px 26px;
+  border: none;
+  border-radius: 999px;
+  font: 600 15px/1 var(--font);
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+  text-align: center;
+}
+.btn--primary {
+  background: linear-gradient(135deg, var(--clr-primary), var(--clr-primary-d));
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, .35);
+}
+.btn--primary:hover {
+  transform: translateY(-3px);           /* Légère élévation au survol */
+  box-shadow: 0 14px 28px rgba(37, 99, 235, .45);
+}
+.btn--ghost {
+  background: transparent;
+  color: var(--clr-dark);
+  border: 2px solid var(--clr-light);
+}
+.btn--ghost:hover { border-color: var(--clr-primary); color: var(--clr-primary); }
+.btn--lg     { padding: 16px 34px; font-size: 16px; }
+.btn--block  { width: 100%; }
+.btn:active { transform: translateY(0); }  /* Effet "pressé" */
+
+/* --- Petites étiquettes (badges) --- */
+.badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, .1);
+  color: var(--clr-primary);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+.badge--dark { background: rgba(14, 23, 48, .07); color: var(--clr-dark); }
+
+/* --- Titres de section --- */
+.section-head { text-align: center; max-width: 640px; margin: 0 auto 50px; }
+.section-title { font-size: clamp(28px, 4vw, 40px); color: var(--clr-dark); font-weight: 800; line-height: 1.2; }
+.section-sub   { margin-top: 14px; font-size: 17px; }
+.highlight { color: var(--clr-primary); }   /* Mot surligné en bleu */
+
+/* --- Étoiles de notation --- */
+.stars { color: var(--clr-accent); letter-spacing: 2px; }
+
+
+/* -------------------------------------------------------------
+   4. NAVBAR (en-tête collant)
+------------------------------------------------------------- */
+.navbar {
+  position: sticky;          /* Reste visible en haut au défilement */
+  top: 0; z-index: 100;
+  background: rgba(255, 255, 255, .85);
+  backdrop-filter: blur(12px);           /* Effet "verre dépoli" */
+  border-bottom: 1px solid transparent;
+  transition: box-shadow .3s ease, border-color .3s ease;
+}
+/* Ombre ajoutée par JS quand on scrolle (classe .scrolled) */
+.navbar.scrolled { box-shadow: var(--shadow); border-color: var(--clr-light); }
+
+.navbar__inner {
+  height: var(--nav-h);
+  display: flex;             /* Logo | Liens | CTA sur une ligne */
+  align-items: center;
+  gap: 24px;
+}
+
+/* --- Logo --- */
+.logo { display: flex; align-items: center; gap: 8px; margin-right: auto; }
+.logo__icon {
+  font-size: 22px;
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  background: linear-gradient(135deg, var(--clr-primary), var(--clr-primary-d));
+  color: #fff; border-radius: 10px;
+}
+.logo__text { font-weight: 800; font-size: 19px; color: var(--clr-dark); letter-spacing: .5px; }
+.logo__text small { color: var(--clr-primary); font-size: 12px; margin-left: 4px; }
+
+/* --- Liens de navigation --- */
+.nav { display: flex; gap: 6px; }
+.nav__link {
+  padding: 8px 14px; border-radius: 8px;
+  font-weight: 500; font-size: 15px; color: var(--clr-dark);
+  transition: background .2s, color .2s;
+}
+.nav__link:hover { background: rgba(37, 99, 235, .08); color: var(--clr-primary); }
+
+/* --- Menu hamburger (masqué sur desktop) --- */
+.hamburger {
+  display: none;
+  flex-direction: column; gap: 5px;
+  background: none; border: none; cursor: pointer; padding: 8px;
+}
+.hamburger span { width: 24px; height: 2.5px; background: var(--clr-dark); border-radius: 2px; transition: .3s; }
+
+
+/* -------------------------------------------------------------
+   5. HERO (section principale)
+------------------------------------------------------------- */
+.hero { padding: 80px 0 90px; overflow: hidden; }
+
+.hero__grid {
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;   /* Texte | Image */
+  gap: 60px;
+  align-items: center;
+}
+
+.hero__title {
+  font-size: clamp(34px, 5vw, 56px);
+  color: var(--clr-dark);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+.hero__desc { font-size: 18px; max-width: 520px; }
+.hero__desc strong { color: var(--clr-dark); }
+
+/* Liste des points forts */
+.hero__points { margin: 22px 0 30px; display: grid; gap: 10px; }
+.hero__points li { font-weight: 500; color: var(--clr-dark); }
+
+/* Boutons d'action côte à côte */
+.hero__actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+/* Preuve sociale */
+.hero__rating { margin-top: 26px; display: flex; align-items: center; gap: 10px; font-size: 14px; }
+.hero__rating strong { color: var(--clr-dark); }
+
+/* --- Visuel du produit --- */
+.hero__visual { position: relative; }
+
+/* Carte blanche derrière l'image */
+.hero__card {
+  position: relative;
+  background: radial-gradient(circle at 50% 30%, #ffffff, #eef3fb);
+  border-radius: 24px;
+  padding: 34px;
+  box-shadow: var(--shadow-lg);
+  animation: float 5s ease-in-out infinite;   /* Flottement doux */
+}
+.hero__img {
+  width: 100%;
+  max-height: 420px;
+  object-fit: contain;      /* L'image ne déforme jamais */
+  mix-blend-mode: multiply; /* Fond blanc fondu proprement si besoin */
+}
+/* Lien autour de l'image produit (hero) */
+.hero__link {
+  display: block;
+  cursor: pointer;
+  transition: transform .3s ease, filter .3s ease;
+}
+.hero__link:hover {
+  transform: scale(1.02);
+  filter: brightness(1.03);
+}
+
+/* Étiquette de prix flottante */
+.price-tag {
+  position: absolute; bottom: 18px; right: 18px;
+  background: var(--clr-dark); color: #fff;
+  padding: 10px 16px; border-radius: 14px;
+  display: flex; align-items: center; gap: 10px;
+  box-shadow: var(--shadow);
+}
+.price-tag__old { text-decoration: line-through; opacity: .55; font-size: 13px; }
+.price-tag__new { font-weight: 800; font-size: 19px; color: var(--clr-accent); }
+
+/* Pastilles flottantes (livraison, garantie) */
+.float-badge {
+  position: absolute;
+  background: #fff; border-radius: 999px;
+  padding: 10px 16px; font-size: 13px; font-weight: 600; color: var(--clr-dark);
+  box-shadow: var(--shadow);
+}
+.float-badge--1 { top: 24px; left: -18px; animation: float 4s ease-in-out infinite; }
+.float-badge--2 { bottom: 90px; right: -14px; animation: float 6s ease-in-out .5s infinite; }
+
+/* Animation de flottement */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+
+
+/* -------------------------------------------------------------
+   6. FEATURES (caractéristiques)
+------------------------------------------------------------- */
+.features { padding: 90px 0; background: var(--clr-surface); }
+
+.features__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);  /* 3 colonnes égales */
+  gap: 28px;
+}
+
+/* Carte caractéristique */
+.feature-card {
+  position: relative;
+  background: var(--clr-bg);
+  border: 1px solid var(--clr-light);
+  border-radius: var(--radius);
+  padding: 34px 28px;
+  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+}
+/* Effet au survol : élévation + bordure bleue */
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(37, 99, 235, .4);
+}
+.feature-card__icon {
+  font-size: 30px;
+  width: 62px; height: 62px;
+  display: grid; place-items: center;
+  background: #fff; border-radius: 18px;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+  transition: transform .3s ease;
+}
+.feature-card:hover .feature-card__icon { transform: scale(1.12) rotate(-6deg); }
+.feature-card h3 { color: var(--clr-dark); font-size: 19px; margin-bottom: 10px; }
+.feature-card p  { font-size: 15px; }
+.feature-card__tag {
+  display: inline-block; margin-top: 16px;
+  font-size: 12px; font-weight: 700;
+  color: var(--clr-primary);
+  background: rgba(37, 99, 235, .08);
+  padding: 5px 12px; border-radius: 999px;
+}
+
+
+/* -------------------------------------------------------------
+   7. TRUST (avis & badges de confiance)
+------------------------------------------------------------- */
+.trust { padding: 90px 0; }
+
+/* Bandeau de badges garanties */
+.badges-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 70px;
+}
+.trust-badge {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-light);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex; flex-direction: column; gap: 4px;
+  font-size: 16px; color: var(--clr-dark);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.trust-badge:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+.trust-badge span { font-size: 13px; color: var(--clr-text); font-weight: 400; }
+
+/* Grille de témoignages */
+.testimonials__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+.testimonial {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-light);
+  border-radius: var(--radius);
+  padding: 30px;
+  display: flex; flex-direction: column; gap: 16px;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.testimonial:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+.testimonial blockquote { font-size: 15px; font-style: italic; }
+.testimonial figcaption { display: flex; align-items: center; gap: 12px; margin-top: auto; }
+.testimonial small { display: block; color: var(--clr-text); font-size: 12.5px; }
+.avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: linear-gradient(135deg, var(--clr-primary), var(--clr-primary-d));
+  color: #fff; font-weight: 700; font-size: 14px;
+}
+
+
+/* -------------------------------------------------------------
+   8. ORDER (formulaire de commande)
+------------------------------------------------------------- */
+.order {
+  padding: 90px 0;
+  background: linear-gradient(180deg, var(--clr-surface), var(--clr-bg));
+}
+.order__grid {
+  display: grid;
+  grid-template-columns: .9fr 1.1fr;   /* Résumé produit | Formulaire */
+  gap: 40px;
+  align-items: start;
+}
+
+/* Récapitulatif produit */
+.order__summary {
+  background: var(--clr-dark);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 34px;
+  position: sticky;            /* Suit le défilement sur desktop */
+  top: calc(var(--nav-h) + 20px);
+}
+.order__img {
+  width: 100%; height: 240px;
+  object-fit: contain;
+  background: #fff;
+  border-radius: var(--radius-sm);
+  margin-bottom: 22px;
+}
+.order__summary h3 { font-size: 21px; margin-bottom: 14px; }
+.order__summary ul { display: grid; gap: 8px; font-size: 14.5px; opacity: .9; }
+.order__price { margin-top: 22px; display: flex; align-items: center; gap: 12px; }
+.order__price .price-tag__new { font-size: 26px; }
+.order__save {
+  background: var(--clr-accent); color: #1f1300;
+  font-size: 12px; font-weight: 700;
+  padding: 4px 10px; border-radius: 999px;
+}
+
+/* Le formulaire */
+.order__form {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-light);
+  border-radius: var(--radius);
+  padding: 36px;
+  box-shadow: var(--shadow);
+}
+.order__form h3 { color: var(--clr-dark); font-size: 22px; }
+.order__form-sub { font-size: 14px; margin: 6px 0 24px; }
+
+/* Champs de formulaire */
+.field { margin-bottom: 18px; }
+.field label { display: block; font-weight: 600; font-size: 14px; color: var(--clr-dark); margin-bottom: 7px; }
+.field input:not([type="checkbox"]),
+.field select {
+  width: 100%;
+  padding: 13px 15px;
+  border: 1.5px solid var(--clr-light);
+  border-radius: var(--radius-sm);
+  font: 400 15px var(--font);
+  color: var(--clr-dark);
+  background: var(--clr-bg);
+  transition: border-color .2s, box-shadow .2s;
+}
+.field input:focus, .field select:focus {
+  outline: none;
+  border-color: var(--clr-primary);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, .12);
+}
+/* État d'erreur (classe ajoutée par script.js) */
+.field.invalid input { border-color: #dc2626; }
+.field__error { display: block; color: #dc2626; font-size: 12.5px; margin-top: 5px; min-height: 1px; }
+
+/* Case à cocher */
+.field--check { display: flex; align-items: flex-start; gap: 10px; }
+.field--check input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--clr-primary); }
+.field--check label { font-weight: 400; font-size: 13.5px; color: var(--clr-text); margin: 0; }
+
+.order__reassure { text-align: center; font-size: 12.5px; margin-top: 14px; }
+
+
+/* -------------------------------------------------------------
+   9. FOOTER (pied de page)
+------------------------------------------------------------- */
+.footer { background: var(--clr-dark); color: #cbd5e1; padding-top: 60px; }
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;   /* Marque + 3 colonnes */
+  gap: 40px;
+  padding-bottom: 50px;
+}
+.footer .logo__text { color: #fff; }
+.footer__brand p { font-size: 14px; margin: 16px 0 20px; max-width: 300px; }
+.footer__col h4 { color: #fff; font-size: 15px; margin-bottom: 16px; }
+.footer__col a { display: block; font-size: 14px; padding: 5px 0; transition: color .2s; }
+.footer__col a:hover { color: #fff; }
+
+/* Réseaux sociaux */
+.socials { display: flex; gap: 10px; }
+.social {
+  width: 38px; height: 38px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: rgba(255, 255, 255, .08);
+  color: #fff; font-size: 13px; font-weight: 700;
+  transition: background .2s, transform .2s;
+}
+.social:hover { background: var(--clr-primary); transform: translateY(-3px); }
+
+/* Barre copyright */
+.footer__bottom { border-top: 1px solid rgba(255, 255, 255, .1); padding: 20px 0; }
+.footer__bottom p { font-size: 13px; text-align: center; }
+
+
+/* -------------------------------------------------------------
+   10. MODALE & NOTIFICATION TOAST
+------------------------------------------------------------- */
+.modal {
+  position: fixed; inset: 0;
+  display: none;              /* Cachée par défaut */
+  place-items: center;
+  z-index: 200;
+}
+.modal.open { display: grid; }   /* Affichée quand JS ajoute .open */
+
+/* Voile semi-transparent derrière la modale */
+.modal__overlay { position: absolute; inset: 0; background: rgba(14, 23, 48, .55); backdrop-filter: blur(3px); }
+
+/* Boîte de la modale */
+.modal__box {
+  position: relative;
+  background: #fff;
+  width: min(430px, 90%);
+  border-radius: 20px;
+  padding: 40px 34px 34px;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  animation: popIn .3s cubic-bezier(.2, .9, .3, 1.2);
+}
+@keyframes popIn {
+  from { transform: scale(.85); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+.modal__icon { font-size: 46px; margin-bottom: 12px; }
+.modal__box h3 { color: var(--clr-dark); font-size: 20px; margin-bottom: 10px; }
+.modal__box p  { font-size: 14.5px; margin-bottom: 24px; }
+.modal__close {
+  position: absolute; top: 14px; right: 14px;
+  width: 34px; height: 34px; border-radius: 50%;
+  border: none; background: var(--clr-bg); color: var(--clr-dark);
+  font-size: 15px; cursor: pointer;
+  transition: background .2s, transform .2s;
+}
+.modal__close:hover { background: var(--clr-light); transform: rotate(90deg); }
+
+/* Notification toast (message éphémère) */
+.toast {
+  position: fixed; bottom: 26px; right: 26px;
+  background: var(--clr-dark); color: #fff;
+  padding: 14px 22px; border-radius: 12px;
+  font-size: 14.5px; font-weight: 500;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(140%);          /* Cachée hors écran */
+  transition: transform .4s cubic-bezier(.2, .9, .3, 1.1);
+  z-index: 300;
+  max-width: min(340px, 85vw);
+}
+.toast.show { transform: translateY(0); }  /* Visible */
+.toast.success { background: var(--clr-success); }
+.toast.error   { background: #dc2626; }
+
+
+/* -------------------------------------------------------------
+   11. EFFETS D'APPARITION AU DÉFILEMENT (reveal)
+   Les blocs .reveal démarrent transparent ; script.js ajoute
+   .visible quand ils entrent dans le champ du navigateur.
+------------------------------------------------------------- */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+
+/* -------------------------------------------------------------
+   12. DESIGN ADAPTATIF (RESPONSIVE)
+------------------------------------------------------------- */
+
+/* --- Tablette (écrans ≤ 992px) --- */
+@media (max-width: 992px) {
+  .hero__grid          { grid-template-columns: 1fr; gap: 45px; text-align: center; }
+  .hero__desc          { margin-inline: auto; }
+  .hero__points        { display: inline-grid; text-align: left; }
+  .hero__actions       { justify-content: center; }
+  .hero__rating        { justify-content: center; }
+  .float-badge--1      { left: 0; }
+  .float-badge--2      { right: 0; }
+
+  .features__grid      { grid-template-columns: repeat(2, 1fr); }
+  .badges-row          { grid-template-columns: repeat(2, 1fr); }
+  .testimonials__grid  { grid-template-columns: 1fr; }
+  .order__grid         { grid-template-columns: 1fr; }
+  .order__summary      { position: static; }   /* Plus de sticky */
+
+  .footer__grid        { grid-template-columns: 1fr 1fr; }
+}
+
+/* --- Mobile (écrans ≤ 640px) --- */
+@media (max-width: 640px) {
+  /* Menu hamburger visible, liens masqués en panel déroulant */
+  .hamburger { display: flex; }
+  .nav {
+    position: absolute; top: var(--nav-h); left: 0; right: 0;
+    background: #fff;
+    flex-direction: column; gap: 0;
+    padding: 10px 5%;
+    border-bottom: 1px solid var(--clr-light);
+    box-shadow: var(--shadow);
+    display: none;                     /* Replié par défaut */
+  }
+  .nav.open { display: flex; }         /* Déplié par JS */
+  .nav__link { padding: 12px 10px; }
+  .navbar__cta { display: none; }      /* CTA masqué sur mobile (dans le menu) */
+
+  /* Ajout du CTA dans le menu mobile via ::after n'est pas possible :
+     on garde donc le bouton hamburger simple et les liens suffisent. */
+
+  .features__grid { grid-template-columns: 1fr; }
+  .badges-row      { grid-template-columns: 1fr; }
+  .footer__grid    { grid-template-columns: 1fr; gap: 30px; }
+  .hero            { padding: 50px 0 60px; }
+  .features, .trust, .order { padding: 60px 0; }
+  .order__form     { padding: 26px 20px; }
+  .order__summary  { padding: 24px 20px; }
+}

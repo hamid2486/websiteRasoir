@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<!-- ============================================================
+     LANDING PAGE — RASOIR ÉLECTRIQUE DE HAUTE PRÉCISION
+     Fichier 1/3 : index.html (structure de la page)
+     Langue : Français
+     ------------------------------------------------------------
+     La page est divisée en 6 sections majeures :
+     1. En-tête (Navbar)
+     2. Section principale (Hero)
+     3. Caractéristiques (Features)
+     4. Avis & Confiance (Testimonials / Badges)
+     5. Formulaire de commande
+     6. Pied de page (Footer)
+     + une fenêtre modale (modal) gérée par script.js
+============================================================ -->
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PRECIVA X1 — Rasoir électrique de haute précision, 100% étanche, batterie longue durée et lames en acier inoxydable. Garantie 2 ans, livraison gratuite.">
+  <title>PRECIVA X1 — Rasoir Électrique de Haute Précision</title>
+
+  <!-- Feuille de style principale (fichier 2/3) -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Police Google Fonts (Inter) : élégante et très lisible -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- ============================================================
+       1. EN-TÊTE (NAVBAR)
+       Logo + liens de navigation rapides + bouton CTA "Acheter"
+       La barre devient "collante" (sticky) au défilement.
+  ============================================================ -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+
+      <!-- Logo de la marque : icône + nom -->
+      <a href="#accueil" class="logo">
+        <span class="logo__icon">⚙</span>
+        <span class="logo__text">PRECIVA<small>X1</small></span>
+      </a>
+
+      <!-- Liens de navigation (masqués en mobile, voir media queries) -->
+      <nav class="nav" id="nav" aria-label="Navigation principale">
+        <a href="#accueil" class="nav__link">Accueil</a>
+        <a href="#caracteristiques" class="nav__link">Caractéristiques</a>
+        <a href="#avis" class="nav__link">Avis</a>
+        <a href="#commander" class="nav__link">Commander</a>
+      </nav>
+
+      <!-- Bouton d'appel à l'action (CTA) du haut -->
+      <a href="#commander" class="btn btn--primary navbar__cta">Acheter</a>
+
+      <!-- Bouton hamburger (visible uniquement sur mobile) -->
+      <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+
+  <!-- ============================================================
+       2. SECTION PRINCIPALE (HERO SECTION)
+       Titre percutant + description marketing + image produit
+       + bouton principal "Commander maintenant"
+  ============================================================ -->
+  <section class="hero" id="accueil">
+    <div class="container hero__grid">
+
+      <!-- Colonne de gauche : le contenu textuel -->
+      <div class="hero__content">
+        <span class="badge">Nouveau — Édition Professionnelle</span>
+
+        <h1 class="hero__title">
+          La précision d'un rasoir<br>
+          <span class="highlight">de barber.</span> Chez vous.
+        </h1>
+
+        <p class="hero__desc">
+          Le rasoir électrique <strong>PRECIVA X1</strong> allie lames en acier
+          inoxydable taillées à la main, motorisation silencieuse et étanchéité
+          totale pour un rasage ultra-propre, à sec comme à l'eau. Fini les
+          irritations, place à la performance.
+        </p>
+
+        <!-- Points forts résumés (petite liste) -->
+        <ul class="hero__points">
+          <li>✓ Rasage à sec ou sous l'eau (100% étanche)</li>
+          <li>✓ 90 minutes d'autonomie — charge rapide USB-C</li>
+          <li>✓ Testé dermatologiquement, zéro irritation</li>
+        </ul>
+
+        <!-- Conteneur des boutons d'action -->
+        <div class="hero__actions">
+          <!-- Ce bouton ouvre la fenêtre modale (géré par script.js) -->
+          <button class="btn btn--primary btn--lg" data-open-modal>
+            Commander maintenant
+          </button>
+          <a href="#caracteristiques" class="btn btn--ghost btn--lg">
+            Découvrir →
+          </a>
+        </div>
+
+        <!-- Preuve sociale rapide : note moyenne -->
+        <div class="hero__rating">
+          <span class="stars">★★★★★</span>
+          <span>4,9/5 — plus de <strong>12 400</strong> clients satisfaits</span>
+        </div>
+      </div>
+
+      <!-- Colonne de droite : visuel du produit -->
+      <div class="hero__visual">
+        <div class="hero__card">
+          <!-- Image du produit (fichier présent dans ce dossier) — cliquable -->
+          <a href="https://www.marjanemall.ma/p/tondeuse-professionnel-tondeuse-a-cheveux-usb-charge-rapide-push-cisaillement-ecran-lcd-km-2273-aaasf22427#s"
+             class="hero__link" target="_blank" rel="noopener noreferrer"
+             aria-label="Voir le rasoir PRECIVA X1 sur Marjanemall">
+            <img src="AAASF22427_img1.webp"
+                 alt="Rasoir électrique PRECIVA X1 de haute précision"
+                 class="hero__img" loading="eager">
+          </a>
+          <!-- Étiquette prix flottante -->
+          <div class="price-tag">
+            <span class="price-tag__old">79,90 €</span>
+            <span class="price-tag__new">49,90 €</span>
+          </div>
+        </div>
+        <!-- Pastille flottante "Livraison gratuite" -->
+        <div class="float-badge float-badge--1">🚚 Livraison gratuite</div>
+        <div class="float-badge float-badge--2">🛡 Garantie 2 ans</div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       3. SECTION CARACTÉRISTIQUES (FEATURES)
+       Grille de 3 cartes avec icônes : étanchéité, batterie, lames
+       (CSS Grid pour la disposition responsive)
+  ============================================================ -->
+  <section class="features" id="caracteristiques">
+    <div class="container">
+      <div class="section-head">
+        <span class="badge badge--dark">Pourquoi PRECIVA X1 ?</span>
+        <h2 class="section-title">Conçu pour la <span class="highlight">haute précision</span></h2>
+        <p class="section-sub">
+          Chaque détail a été pensé pour offrir un rasage irréprochable,
+          chaque jour, pendant des années.
+        </p>
+      </div>
+
+      <!-- Grille de 3 cartes (devient 1 colonne sur mobile) -->
+      <div class="features__grid">
+
+        <!-- Carte 1 : 100% Étanche -->
+        <article class="feature-card reveal">
+          <div class="feature-card__icon">💧</div>
+          <h3>100% Étanche — Wet &amp; Dry</h3>
+          <p>
+            Utilisez-le sous la douche ou à sec, avec mousse ou sans.
+            Étanchéité IPX7 complète : rincez-le simplement sous le robinet
+            après chaque utilisation.
+          </p>
+          <span class="feature-card__tag">IPX7</span>
+        </article>
+
+        <!-- Carte 2 : Batterie longue durée -->
+        <article class="feature-card reveal">
+          <div class="feature-card__icon">🔋</div>
+          <h3>Batterie longue durée</h3>
+          <p>
+            Jusqu'à <strong>90 minutes</strong> d'autonomie continue.
+            Charge rapide USB-C : 5 minutes de charge suffisent pour un
+            rasage complet d'urgence.
+          </p>
+          <span class="feature-card__tag">90 min</span>
+        </article>
+
+        <!-- Carte 3 : Lames en acier inoxydable -->
+        <article class="feature-card reveal">
+          <div class="feature-card__icon">⚔️</div>
+          <h3>Lames acier inoxydable</h3>
+          <p>
+            Têtes flottantes à lames japonaises affûtées à 30°, qui suivent
+            les contours du visage pour saisir même les poils les plus courts
+            sans tirer.
+          </p>
+          <span class="feature-card__tag">Précision 0,1 mm</span>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       4. SECTION AVIS & CONFIANCE (Testimonials / Badges)
+       Badges de garantie + 3 avis clients + statistiques
+  ============================================================ -->
+  <section class="trust" id="avis">
+    <div class="container">
+
+      <!-- Bandeau de badges / garanties -->
+      <div class="badges-row">
+        <div class="trust-badge">🛡 <strong>Garantie 2 ans</strong><span>Satisfait ou remboursé 30 jours</span></div>
+        <div class="trust-badge">🚚 <strong>Livraison gratuite</strong><span>Expédiée sous 24 h en France</span></div>
+        <div class="trust-badge">⭐ <strong>4,9/5 de note</strong><span>12 400+ avis vérifiés</span></div>
+        <div class="trust-badge">🔒 <strong>Paiement sécurisé</strong><span>CB, PayPal, 3× sans frais</span></div>
+      </div>
+
+      <div class="section-head">
+        <span class="badge badge--dark">Ils nous font confiance</span>
+        <h2 class="section-title">Ce que disent <span class="highlight">nos clients</span></h2>
+      </div>
+
+      <!-- Grille de 3 témoignages -->
+      <div class="testimonials__grid">
+
+        <figure class="testimonial reveal">
+          <div class="stars">★★★★★</div>
+          <blockquote>
+            "Je n'avais jamais obtenu un rasage aussi propre avec un électrique.
+            Les lames ne tirent pas, et je l'utilise sous la douche tous les matins."
+          </blockquote>
+          <figcaption>
+            <span class="avatar">ML</span>
+            <div><strong>Marc L.</strong><small>Client vérifié — Lyon</small></div>
+          </figcaption>
+        </figure>
+
+        <figure class="testimonial reveal">
+          <div class="stars">★★★★★</div>
+          <blockquote>
+            "La batterie tient une semaine entière sans recharger. Design
+            premium, silencieux, et la livraison est arrivée en 24 h. Parfait."
+          </blockquote>
+          <figcaption>
+            <span class="avatar">SD</span>
+            <div><strong>Sofia D.</strong><small>Cliente vérifiée — Paris</small></div>
+          </figcaption>
+        </figure>
+
+        <figure class="testimonial reveal">
+          <div class="stars">★★★★☆</div>
+          <blockquote>
+            "Peau très sensible d'habitude, aucun irritation avec le PRECIVA X1.
+            Le rapport qualité-prix est imbattable à ce prix-là."
+          </blockquote>
+          <figcaption>
+            <span class="avatar">KB</span>
+            <div><strong>Karim B.</strong><small>Client vérifié — Marseille</small></div>
+          </figcaption>
+        </figure>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       5. FORMULAIRE DE COMMANDE (Achat rapide)
+       Formulaire simple validé en JavaScript (script.js)
+  ============================================================ -->
+  <section class="order" id="commander">
+    <div class="container order__grid">
+
+      <!-- Récapitulatif du produit à commander -->
+      <div class="order__summary">
+        <img src="AAASF22427_img1.webp" alt="Rasoir PRECIVA X1" class="order__img">
+        <h3>PRECIVA X1 — Édition Pro</h3>
+        <ul>
+          <li>✓ Rasoir PRECIVA X1 + 3 têtes de rechange</li>
+          <li>✓ Chargeur USB-C &amp; étui de voyage</li>
+          <li>✓ Guide de démarrage en français</li>
+        </ul>
+        <div class="order__price">
+          <span class="price-tag__old">79,90 €</span>
+          <span class="price-tag__new">49,90 €</span>
+          <span class="order__save">−37 % aujourd'hui</span>
+        </div>
+      </div>
+
+      <!-- Le formulaire lui-même -->
+      <form class="order__form" id="orderForm" novalidate>
+        <h3>🏁 Commander en 30 secondes</h3>
+        <p class="order__form-sub">Sans inscription. Paiement à l'étape suivante.</p>
+
+        <!-- Champ : nom complet -->
+        <div class="field">
+          <label for="nom">Nom complet *</label>
+          <input type="text" id="nom" name="nom" placeholder="Ex : Jean Dupont" required>
+          <small class="field__error"></small>
+        </div>
+
+        <!-- Champ : e-mail -->
+        <div class="field">
+          <label for="email">Adresse e-mail *</label>
+          <input type="email" id="email" name="email" placeholder="vous@exemple.com" required>
+          <small class="field__error"></small>
+        </div>
+
+        <!-- Champ : téléphone -->
+        <div class="field">
+          <label for="tel">Téléphone *</label>
+          <input type="tel" id="tel" name="tel" placeholder="06 12 34 56 78" required>
+          <small class="field__error"></small>
+        </div>
+
+        <!-- Champ : quantité -->
+        <div class="field">
+          <label for="qte">Quantité</label>
+          <select id="qte" name="qte">
+            <option value="1">1 unité — 49,90 €</option>
+            <option value="2">2 unités — 89,80 € (−10 %)</option>
+            <option value="3">3 unités — 119,70 € (−20 %)</option>
+          </select>
+        </div>
+
+        <!-- Case à cocher : acceptation des conditions -->
+        <div class="field field--check">
+          <input type="checkbox" id="cgv" name="cgv" required>
+          <label for="cgv">J'accepte les conditions de vente et la politique de confidentialité. *</label>
+        </div>
+
+        <!-- Bouton de soumission : ouvre aussi la modale de confirmation -->
+        <button type="submit" class="btn btn--primary btn--lg btn--block">
+          Commander maintenant — 49,90 €
+        </button>
+
+        <p class="order__reassure">🔒 Paiement sécurisé · Garantie 2 ans · Livraison gratuite</p>
+      </form>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       6. PIED DE PAGE (FOOTER)
+       Copyright, liens utiles et réseaux sociaux
+  ============================================================ -->
+  <footer class="footer">
+    <div class="container footer__grid">
+
+      <!-- Colonne marque -->
+      <div class="footer__brand">
+        <a href="#accueil" class="logo">
+          <span class="logo__icon">⚙</span>
+          <span class="logo__text">PRECIVA<small>X1</small></span>
+        </a>
+        <p>Le rasoir électrique de haute précision pensé pour les peaux exigeantes. Fabriqué et testé en Europe.</p>
+        <!-- Réseaux sociaux (icônes texte, aucun script externe) -->
+        <div class="socials">
+          <a href="#" aria-label="Facebook" class="social">f</a>
+          <a href="#" aria-label="Instagram" class="social">ig</a>
+          <a href="#" aria-label="X (Twitter)" class="social">x</a>
+          <a href="#" aria-label="YouTube" class="social">▶</a>
+        </div>
+      </div>
+
+      <!-- Colonne : liens utiles -->
+      <div class="footer__col">
+        <h4>Produit</h4>
+        <a href="#caracteristiques">Caractéristiques</a>
+        <a href="#avis">Avis clients</a>
+        <a href="#commander">Commander</a>
+        <a href="#">Accessoires</a>
+      </div>
+
+      <!-- Colonne : aide & support -->
+      <div class="footer__col">
+        <h4>Aide</h4>
+        <a href="#">Livraison &amp; retours</a>
+        <a href="#">Garantie 2 ans</a>
+        <a href="#">FAQ</a>
+        <a href="#">Nous contacter</a>
+      </div>
+
+      <!-- Colonne : légal -->
+      <div class="footer__col">
+        <h4>Légal</h4>
+        <a href="#">Mentions légales</a>
+        <a href="#">CGV</a>
+        <a href="#">Confidentialité</a>
+        <a href="#">Cookies</a>
+      </div>
+
+    </div>
+
+    <!-- Barre de copyright -->
+    <div class="footer__bottom">
+      <div class="container">
+        <p>© <span id="year">2026</span> PRECIVA — Tous droits réservés. | Fait avec ❤ pour un rasage parfait.</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ============================================================
+       FENÊTRE MODALE (MODAL)
+       Cachée par défaut (display:none dans style.css).
+       Ouverte par les boutons "Commander" via script.js.
+  ============================================================ -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal__overlay" data-close-modal></div>
+    <div class="modal__box">
+      <button class="modal__close" data-close-modal aria-label="Fermer">✕</button>
+      <div class="modal__icon">✅</div>
+      <h3 id="modalTitle">Votre commande est presque enregistrée !</h3>
+      <p id="modalText">
+        Merci ! Votre commande de <strong>PRECIVA X1</strong> a bien été
+        prise en compte. Vous recevrez un e-mail de confirmation avec le
+        lien de paiement sécurisé.
+      </p>
+      <button class="btn btn--primary btn--block" data-close-modal>Parfait, merci !</button>
+    </div>
+  </div>
+
+  <!-- Notification toast (message qui apparaît en bas à droite) -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Fichier 3/3 : la logique JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>

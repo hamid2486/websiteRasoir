@@ -235,12 +235,6 @@ ul  { list-style: none; }
 /* Lien autour de l'image produit (hero) */
 .hero__link {
   display: block;
-  cursor: pointer;
-  transition: transform .3s ease, filter .3s ease;
-}
-.hero__link:hover {
-  transform: scale(1.02);
-  filter: brightness(1.03);
 }
 
 /* Étiquette de prix flottante */
@@ -466,16 +460,14 @@ ul  { list-style: none; }
 .footer__col a { display: block; font-size: 14px; padding: 5px 0; transition: color .2s; }
 .footer__col a:hover { color: #fff; }
 
-/* Réseaux sociaux */
-.socials { display: flex; gap: 10px; }
-.social {
-  width: 38px; height: 38px; border-radius: 50%;
-  display: grid; place-items: center;
-  background: rgba(255, 255, 255, .08);
-  color: #fff; font-size: 13px; font-weight: 700;
-  transition: background .2s, transform .2s;
+/* Contact direct (WhatsApp + téléphone) */
+.footer__contact { display: flex; flex-direction: column; gap: 10px; }
+.footer__contact a {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-size: 14.5px; font-weight: 600; color: #fff;
+  transition: color .2s, transform .2s;
 }
-.social:hover { background: var(--clr-primary); transform: translateY(-3px); }
+.footer__contact a:hover { color: #25d366; transform: translateX(3px); }
 
 /* Barre copyright */
 .footer__bottom { border-top: 1px solid rgba(255, 255, 255, .1); padding: 20px 0; }
@@ -506,6 +498,8 @@ ul  { list-style: none; }
   text-align: center;
   box-shadow: var(--shadow-lg);
   animation: popIn .3s cubic-bezier(.2, .9, .3, 1.2);
+  max-height: 85vh;
+  overflow-y: auto;
 }
 @keyframes popIn {
   from { transform: scale(.85); opacity: 0; }
@@ -514,6 +508,10 @@ ul  { list-style: none; }
 .modal__icon { font-size: 46px; margin-bottom: 12px; }
 .modal__box h3 { color: var(--clr-dark); font-size: 20px; margin-bottom: 10px; }
 .modal__box p  { font-size: 14.5px; margin-bottom: 24px; }
+/* Plusieurs paragraphes (contenus légaux) : espacement plus serré */
+#modalText p { margin-bottom: 12px; }
+#modalText p:last-child { margin-bottom: 24px; }
+#modalText a { color: var(--clr-primary); text-decoration: underline; }
 /* Lien de secours WhatsApp (affiché seulement si la pop-up est bloquée) */
 #modalExtra:not(:empty) { margin-bottom: 24px; }
 .modal__close {
@@ -527,7 +525,7 @@ ul  { list-style: none; }
 
 /* Notification toast (message éphémère) */
 .toast {
-  position: fixed; bottom: 26px; right: 26px;
+  position: fixed; bottom: 96px; right: 26px;   /* au-dessus du bouton WhatsApp */
   background: var(--clr-dark); color: #fff;
   padding: 14px 22px; border-radius: 12px;
   font-size: 14.5px; font-weight: 500;
@@ -540,6 +538,22 @@ ul  { list-style: none; }
 .toast.show { transform: translateY(0); }  /* Visible */
 .toast.success { background: var(--clr-success); }
 .toast.error   { background: #dc2626; }
+
+/* Bouton WhatsApp flottant (contact direct, visible en permanence) */
+.wa-float {
+  position: fixed; right: 24px; bottom: 24px; z-index: 250;
+  width: 56px; height: 56px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: #25d366; color: #fff;
+  box-shadow: 0 10px 26px rgba(37, 211, 102, .45);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.wa-float svg { width: 30px; height: 30px; fill: currentColor; }
+.wa-float:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 14px 30px rgba(37, 211, 102, .55); }
+@media (max-width: 640px) {
+  .wa-float { right: 16px; bottom: 16px; width: 52px; height: 52px; }
+  .toast    { bottom: 84px; right: 16px; }
+}
 
 
 /* -------------------------------------------------------------

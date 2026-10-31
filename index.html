@@ -116,14 +116,12 @@
       <!-- Colonne de droite : visuel du produit -->
       <div class="hero__visual">
         <div class="hero__card">
-          <!-- Image du produit (fichier présent dans ce dossier) — cliquable -->
-          <a href="https://www.marjanemall.ma/p/tondeuse-professionnel-tondeuse-a-cheveux-usb-charge-rapide-push-cisaillement-ecran-lcd-km-2273-aaasf22427#s"
-             class="hero__link" target="_blank" rel="noopener noreferrer"
-             aria-label="Voir le rasoir PRECIVA X1 sur Marjanemall">
+          <!-- Image du produit (fichier présent dans ce dossier) -->
+          <div class="hero__link">
             <img src="AAASF22427_img1.webp"
                  alt="Rasoir électrique PRECIVA X1 de haute précision"
                  class="hero__img" loading="eager">
-          </a>
+          </div>
           <!-- Étiquette prix flottante -->
           <div class="price-tag">
             <span class="price-tag__old">79,90 €</span>
@@ -354,12 +352,15 @@
           <span class="logo__text">PRECIVA<small>X1</small></span>
         </a>
         <p>Le rasoir électrique de haute précision pensé pour les peaux exigeantes. Fabriqué et testé en Europe.</p>
-        <!-- Réseaux sociaux (icônes texte, aucun script externe) -->
-        <div class="socials">
-          <a href="#" aria-label="Facebook" class="social">f</a>
-          <a href="#" aria-label="Instagram" class="social">ig</a>
-          <a href="#" aria-label="X (Twitter)" class="social">x</a>
-          <a href="#" aria-label="YouTube" class="social">▶</a>
+        <!-- Contact réel : les commandes et questions arrivent sur WhatsApp -->
+        <div class="footer__contact">
+          <a href="https://wa.me/212661474050?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20le%20PRECIVA%20X1."
+             target="_blank" rel="noopener">
+            <span aria-hidden="true">💬</span> WhatsApp
+          </a>
+          <a href="tel:+212661474050">
+            <span aria-hidden="true">📞</span> +212 6 61 47 40 50
+          </a>
         </div>
       </div>
 
@@ -369,25 +370,26 @@
         <a href="#caracteristiques">Caractéristiques</a>
         <a href="#avis">Avis clients</a>
         <a href="#commander">Commander</a>
-        <a href="#">Accessoires</a>
       </div>
 
       <!-- Colonne : aide & support -->
       <div class="footer__col">
         <h4>Aide</h4>
-        <a href="#">Livraison &amp; retours</a>
-        <a href="#">Garantie 2 ans</a>
-        <a href="#">FAQ</a>
-        <a href="#">Nous contacter</a>
+        <a href="#" data-legal="cgv">Livraison &amp; retours</a>
+        <a href="#" data-legal="cgv">Garantie 2 ans</a>
+        <a href="https://wa.me/212661474050?text=Bonjour%2C%20j%27ai%20une%20question%20sur%20le%20PRECIVA%20X1."
+           target="_blank" rel="noopener">FAQ</a>
+        <a href="https://wa.me/212661474050?text=Bonjour%2C%20je%20souhaite%20%C3%AAtre%20contact%C3%A9%28e%29."
+           target="_blank" rel="noopener">Nous contacter</a>
       </div>
 
       <!-- Colonne : légal -->
       <div class="footer__col">
         <h4>Légal</h4>
-        <a href="#">Mentions légales</a>
-        <a href="#">CGV</a>
-        <a href="#">Confidentialité</a>
-        <a href="#">Cookies</a>
+        <a href="#" data-legal="mentions">Mentions légales</a>
+        <a href="#" data-legal="cgv">CGV</a>
+        <a href="#" data-legal="privacy">Confidentialité</a>
+        <a href="#" data-legal="privacy">Cookies</a>
       </div>
 
     </div>
@@ -402,20 +404,46 @@
 
 
   <!-- ============================================================
+       CONTENUS LÉGAUX (injectés dans la modale par script.js)
+  ============================================================ -->
+  <template id="legal-mentions">
+    <p><strong>Éditeur du site :</strong> PRECIVA — page de présentation du PRECIVA X1.</p>
+    <p><strong>Contact :</strong> WhatsApp / téléphone <a href="tel:+212661474050">+212 6 61 47 40 50</a>.</p>
+    <p><strong>Hébergement :</strong> GitHub Pages — GitHub Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis.</p>
+  </template>
+
+  <template id="legal-cgv">
+    <p><strong>Commande.</strong> Le formulaire du site ouvre une conversation WhatsApp pré-remplie. La commande est confirmée après échange de messages.</p>
+    <p><strong>Prix.</strong> Les prix affichés sur la page produit s'entendent livraison gratuite incluse.</p>
+    <p><strong>Paiement.</strong> Le mode de paiement est convenu lors de l'échange WhatsApp.</p>
+    <p><strong>Livraison.</strong> Sous 24 h selon disponibilité.</p>
+    <p><strong>Garantie.</strong> 2 ans. Satisfait ou remboursé sous 30 jours.</p>
+    <p><strong>Réclamation.</strong> WhatsApp <a href="https://wa.me/212661474050">+212 6 61 47 40 50</a>.</p>
+  </template>
+
+  <template id="legal-privacy">
+    <p>Ce site ne dépose <strong>aucun cookie de suivi</strong> et n'utilise aucun outil d'analyse.</p>
+    <p>Aucune donnée n'est enregistrée sur un serveur : le formulaire de commande ouvre WhatsApp avec un message pré-rempli. Les informations saisies (nom, téléphone, e-mail, quantité) sont envoyées via WhatsApp et traitées dans cette conversation.</p>
+    <p>La police Inter est chargée depuis Google Fonts, ce qui transmet votre adresse IP à Google.</p>
+    <p>Contact : <a href="https://wa.me/212661474050">+212 6 61 47 40 50</a>.</p>
+  </template>
+
+
+  <!-- ============================================================
        FENÊTRE MODALE (MODAL)
        Cachée par défaut (display:none dans style.css).
-       Ouverte par les boutons "Commander" via script.js.
+       Sert aux contenus légaux et au lien de secours WhatsApp.
   ============================================================ -->
   <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal__overlay" data-close-modal></div>
     <div class="modal__box">
       <button class="modal__close" data-close-modal aria-label="Fermer">✕</button>
-      <div class="modal__icon">✅</div>
+      <div class="modal__icon" id="modalIcon">✅</div>
       <h3 id="modalTitle">Dernière étape</h3>
-      <p id="modalText">
-        Votre commande est prête. Envoyez le message WhatsApp pré-rempli
-        pour la confirmer, et nous vous répondons pour la livraison.
-      </p>
+      <div id="modalText">
+        <p>Votre commande est prête. Envoyez le message WhatsApp pré-rempli
+        pour la confirmer, et nous vous répondons pour la livraison.</p>
+      </div>
       <div id="modalExtra"></div>
       <button class="btn btn--primary btn--block" data-close-modal>Fermer</button>
     </div>
@@ -423,6 +451,16 @@
 
   <!-- Notification toast (message qui apparaît en bas à droite) -->
   <div class="toast" id="toast"></div>
+
+  <!-- Bouton WhatsApp flottant : contact direct depuis n'importe où sur la page -->
+  <a class="wa-float"
+     href="https://wa.me/212661474050?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20le%20PRECIVA%20X1."
+     target="_blank" rel="noopener"
+     aria-label="Nous contacter sur WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
 
   <!-- Fichier 3/3 : la logique JavaScript -->
   <script src="script.js"></script>

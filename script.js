@@ -87,10 +87,11 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 const modal = document.getElementById('modal');
 
 // Ouvrir la modale
-function openModal(title, text) {
-  // Permet de personnaliser le contenu (utile après un achat)
+function openModal(title, text, icon = '✅') {
+  // Permet de personnaliser le contenu (commande, mentions légales…)
   if (title) document.getElementById('modalTitle').textContent = title;
   if (text)  document.getElementById('modalText').innerHTML = text;
+  document.getElementById('modalIcon').textContent = icon;
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';  // Bloque le défilement arrière
 }
@@ -105,6 +106,24 @@ function closeModal() {
 // Branchement : boutons "Commander maintenant" qui ouvrent la modale
 document.querySelectorAll('[data-open-modal]').forEach(btn => {
   btn.addEventListener('click', () => openModal());
+});
+
+// Branchement : liens légaux (CGV, confidentialité, mentions légales).
+// Le contenu vit dans des <template> de index.html : rien n'est inventé
+// ici, et le texte reste modifiable sans toucher au JavaScript.
+const LEGAL_TITLES = {
+  mentions: 'Mentions légales',
+  cgv:      'Conditions de vente',
+  privacy:  'Confidentialité & cookies',
+};
+
+document.querySelectorAll('[data-legal]').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const tpl = document.getElementById('legal-' + link.dataset.legal);
+    if (!tpl) return;
+    openModal(LEGAL_TITLES[link.dataset.legal], tpl.innerHTML, 'ℹ️');
+  });
 });
 
 // Branchement : fermeture (bouton ✕, voile derrière, bouton "Parfait")

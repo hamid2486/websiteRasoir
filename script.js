@@ -218,14 +218,15 @@ function buildWhatsAppUrl() {
   // Le prix est lu directement dans l'option choisie : il reste
   // toujours synchronisé avec les tarifs affichés dans le <select>.
   const option = form.qte.options[form.qte.selectedIndex];
-  const prix   = (option.textContent.match(/(\d+,\d{2})\s*€/) || [])[1];
+  const match  = option.textContent.match(/(\d[\d\s]*)\s*DH/);
+  const prix   = match ? match[1].trim() : '';
 
   const lignes = [
     'Nouvelle commande — PRECIVA X1',
     `Nom : ${nom}`,
     `Téléphone : ${tel}`,
     `E-mail : ${email}`,
-    `Quantité : ${qte}${prix ? ` (${prix} €)` : ''}`,
+    `Quantité : ${qte}${prix ? ` (${prix} DH)` : ''}`,
   ];
 
   return 'https://wa.me/' + ORDER_WHATSAPP + '?text=' + encodeURIComponent(lignes.join('\n'));

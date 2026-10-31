@@ -13,6 +13,15 @@
 
 
 /* -------------------------------------------------------------
+   0. CONFIGURATION
+   Numéro WhatsApp qui reçoit les commandes.
+   Format international, SANS "+", SANS espaces ni tirets.
+   Exemple : Maroc 06 61 47 40 50  →  '212661474050'
+------------------------------------------------------------- */
+const ORDER_WHATSAPP = '212661474050';
+
+
+/* -------------------------------------------------------------
    1. COPYRIGHT : année automatique
    Évite de devoir changer "2026" à la main chaque année.
 ------------------------------------------------------------- */
@@ -90,9 +99,10 @@ function openModal(title, text) {
 function closeModal() {
   modal.classList.remove('open');
   document.body.style.overflow = '';        // Réautorise le défilement
+  document.getElementById('modalExtra').innerHTML = '';  // Nettoie le lien de secours
 }
 
-// Branchement : boutons "Commander maintenant" du hero
+// Branchement : boutons "Commander maintenant" qui ouvrent la modale
 document.querySelectorAll('[data-open-modal]').forEach(btn => {
   btn.addEventListener('click', () => openModal());
 });
@@ -176,8 +186,31 @@ function validateForm(form) {
   return isValid;
 }
 
-// Soumission du formulaire
+// Soumission du formulaire → envoi réel de la commande via WhatsApp
 const form = document.getElementById('orderForm');
+
+// Construit le message pré-rempli envoyé sur WhatsApp
+function buildWhatsAppUrl() {
+  const nom   = form.nom.value.trim();
+  const tel   = form.tel.value.trim();
+  const email = form.email.value.trim();
+  const qte   = form.qte.value;
+
+  // Le prix est lu directement dans l'option choisie : il reste
+  // toujours synchronisé avec les tarifs affichés dans le <select>.
+  const option = form.qte.options[form.qte.selectedIndex];
+  const prix   = (option.textContent.match(/(\d+,\d{2})\s*€/) || [])[1];
+
+  const lignes = [
+    'Nouvelle commande — PRECIVA X1',
+    `Nom : ${nom}`,
+    `Téléphone : ${tel}`,
+    `E-mail : ${email}`,
+    `Quantité : ${qte}${prix ? ` (${prix} €)` : ''}`,
+  ];
+
+  return 'https://wa.me/' + ORDER_WHATSAPP + '?text=' + encodeURIComponent(lignes.join('\n'));
+}
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();   // Empêche le rechargement de la page
@@ -187,21 +220,31 @@ form.addEventListener('submit', (e) => {
     return;             // On s'arrête : formulaire invalide
   }
 
-  // --- Formulaire valide : on "envoie" la commande ---
-  const qte = form.qte.value;
-  const nom = form.nom.value.trim().split(' ')[0];   // Prénom
+  // --- Formulaire valide : on prépare la commande WhatsApp ---
+  const url  = buildWhatsAppUrl();
+  const nom  = form.nom.value.trim().split(/\s+/)[0];   // Prénom
+  const qte  = form.qte.value;
 
-  // Modale de confirmation personnalisée
-  openModal(
-    `Merci ${nom} ! Votre commande est confirmée 🎉`,
-    `Vous venez de commander <strong>${qte} × PRECIVA X1</strong>.<br>
-     Un e-mail de confirmation vous a été envoyé. Livraison gratuite
-     sous 24 h — garantie 2 ans incluse.`
-  );
+  // Ouvre WhatsApp (application ou WhatsApp Web) dans un nouvel onglet
+  const win = window.open(url, '_blank', 'noopener');
 
-  showToast('Commande enregistrée avec succès ! ✅', 'success');
-
-  form.reset();   // Vide le formulaire pour une prochaine utilisation
+  if (win) {
+    // Ouverture réussie : on guide le client vers la dernière étape
+    showToast('Dernière étape : envoyez le message WhatsApp ✅', 'success');
+    form.reset();   // Vide le formulaire pour une prochaine utilisation
+  } else {
+    // Pop-up bloquée : on affiche un lien cliquable de secours
+    openModal(
+      'Dernière étape',
+      `Merci ${nom} ! Votre fenêtre WhatsApp n'a pas pu s'ouvrir.<br>
+       Cliquez sur le bouton ci-dessous pour envoyer votre commande
+       de <strong>${qte} × PRECIVA X1</strong>.`
+    );
+    document.getElementById('modalExtra').innerHTML =
+      `<a class="btn btn--primary btn--block" href="${url}" target="_blank" rel="noopener">
+         Ouvrir WhatsApp et envoyer la commande
+       </a>`;
+  }
 });
 
 // Bonus : on retire l'erreur dès que l'utilisateur corrige un champ

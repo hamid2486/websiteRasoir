@@ -97,10 +97,10 @@
 
         <!-- Conteneur des boutons d'action -->
         <div class="hero__actions">
-          <!-- Ce bouton ouvre la fenêtre modale (géré par script.js) -->
-          <button class="btn btn--primary btn--lg" data-open-modal>
+          <!-- Ce bouton fait défiler jusqu'au formulaire de commande -->
+          <a href="#commander" class="btn btn--primary btn--lg">
             Commander maintenant
-          </button>
+          </a>
           <a href="#caracteristiques" class="btn btn--ghost btn--lg">
             Découvrir →
           </a>
@@ -411,13 +411,13 @@
     <div class="modal__box">
       <button class="modal__close" data-close-modal aria-label="Fermer">✕</button>
       <div class="modal__icon">✅</div>
-      <h3 id="modalTitle">Votre commande est presque enregistrée !</h3>
+      <h3 id="modalTitle">Dernière étape</h3>
       <p id="modalText">
-        Merci ! Votre commande de <strong>PRECIVA X1</strong> a bien été
-        prise en compte. Vous recevrez un e-mail de confirmation avec le
-        lien de paiement sécurisé.
+        Votre commande est prête. Envoyez le message WhatsApp pré-rempli
+        pour la confirmer, et nous vous répondons pour la livraison.
       </p>
-      <button class="btn btn--primary btn--block" data-close-modal>Parfait, merci !</button>
+      <div id="modalExtra"></div>
+      <button class="btn btn--primary btn--block" data-close-modal>Fermer</button>
     </div>
   </div>
 

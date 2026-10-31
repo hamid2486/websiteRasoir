@@ -514,6 +514,8 @@ ul  { list-style: none; }
 .modal__icon { font-size: 46px; margin-bottom: 12px; }
 .modal__box h3 { color: var(--clr-dark); font-size: 20px; margin-bottom: 10px; }
 .modal__box p  { font-size: 14.5px; margin-bottom: 24px; }
+/* Lien de secours WhatsApp (affiché seulement si la pop-up est bloquée) */
+#modalExtra:not(:empty) { margin-bottom: 24px; }
 .modal__close {
   position: absolute; top: 14px; right: 14px;
   width: 34px; height: 34px; border-radius: 50%;
